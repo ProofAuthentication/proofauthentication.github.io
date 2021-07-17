@@ -32,7 +32,7 @@
             const [track] = stream.getVideoTracks();
             const capabilities = track.getCapabilities();
             const settings = track.getSettings();
-            settings.zoom = 2;
+            //settings.zoom = 2;
         }).catch(function(err) {
             $("#msg").append(`<p>${err}</p>`)
         });
@@ -44,7 +44,7 @@
 </style>
 </head>
 <body>
-    <video id="camera"></video>
+    <video id="camera" autoplay></video>
     <div id="msg"></div>
 </body>
 </html>
