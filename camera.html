@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>Camera Test</title>
+<script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+<script>
+    if (!navigator.mediaDevices) {
+    console.log("enumerateDevices() not supported.");
+    }
+    else
+    {
+
+        // List cameras and microphones.
+        navigator.mediaDevices.getUserMedia({
+            video: {
+                width: {
+                    min: 1280,
+                    ideal: 1920,
+                    max: 2560,
+                },
+                height: {
+                    min: 720,
+                    ideal: 1080,
+                    max: 1440
+                },
+                facingMode: 'environment',
+                zoom:true
+            }
+        }).then(function(stream) {
+        /* use the stream */
+            $("#msg").append("<p>backfacing camera with zoom found</p>")
+            document.querySelector('video').srcObject = mediaStream;
+            const [track] = mediaStream.getVideoTracks();
+            const capabilities = track.getCapabilities();
+            const settings = track.getSettings();
+            settings.zoom = 2;
+        }).catch(function(err) {
+            $("#msg").append("<p>no compatible camera available</p>")
+        });
+    }
+</script>
+<style>
+	canvas{
+	border:1px solid black;}
+</style>
+</head>
+<body>
+    <video id="camera"></video>
+    <div id="msg"></div>
+</body>
+</html>
