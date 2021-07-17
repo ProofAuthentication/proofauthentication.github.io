@@ -34,7 +34,7 @@
             const settings = track.getSettings();
             settings.zoom = 2;
         }).catch(function(err) {
-            $("#msg").append("<p>no compatible camera available</p>")
+            $("#msg").append(`<p>${err}</p>`)
         });
     }
 </script>
