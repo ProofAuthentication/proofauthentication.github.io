@@ -28,8 +28,8 @@
         }).then(function(stream) {
         /* use the stream */
             $("#msg").append("<p>backfacing camera with zoom found</p>")
-            document.querySelector('video').srcObject = mediaStream;
-            const [track] = mediaStream.getVideoTracks();
+            document.querySelector('video').srcObject = stream;
+            const [track] = stream.getVideoTracks();
             const capabilities = track.getCapabilities();
             const settings = track.getSettings();
             settings.zoom = 2;
