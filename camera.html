@@ -27,7 +27,7 @@
             }
         }).then(function(stream) {
         /* use the stream */
-            $("#msg").append("<p>v7 backfacing camera with zoom found</p>")
+            $("#msg").append("<p>v8 backfacing camera with zoom found</p>")
             var video = document.querySelector('video');
             video.srcObject = stream;
             video.setAttribute('playsinline', true);
@@ -38,12 +38,13 @@
             video.onloadedmetadata = (function(e) {
                 // Do something with the video here.
                 this.applyConstraints({advanced: [ {zoom: 2}, {torch: true}, {focusMode:"continuous"}, {fillLightMode: "torch"} ]});
+                this.applyConstraints({advanced: [ {zoom: 2}, {"torch": true}, {torch: true}, {focusMode:"continuous"}, {fillLightMode: "torch"} ]});
             }).bind(track);            
             $("#msg").append(`<p>${JSON.stringify(settings)}</p>`)
             $("#msg").append(`<p>${JSON.stringify(capabilities)}</p>`)
 
             //https://googlechrome.github.io/samples/image-capture/update-camera-zoom.html
-            track.applyConstraints({advanced: [ {zoom: 2}, {torch: true}, {focusMode:"continuous"}, {fillLightMode: "torch"} ]});
+            track.applyConstraints({advanced: [ {zoom: 2}, {"torch": true}, {torch: true}, {focusMode:"continuous"}, {fillLightMode: "torch"} ]});
 
         }).catch(function(err) {
             $("#msg").append(`<p>${err}</p>`)
