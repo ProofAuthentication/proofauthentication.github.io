@@ -27,7 +27,7 @@
             }
         }).then(function(stream) {
         /* use the stream */
-            $("#msg").append("<p>v4 backfacing camera with zoom found</p>")
+            $("#msg").append("<p>v5 backfacing camera with zoom found</p>")
             document.querySelector('video').srcObject = stream;
             document.querySelector('video').setAttribute('playsinline', true);
             const [track] = stream.getVideoTracks();
