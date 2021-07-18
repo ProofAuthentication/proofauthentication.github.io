@@ -29,10 +29,10 @@
         /* use the stream */
             $("#msg").append("<p>v3 backfacing camera with zoom found</p>")
             document.querySelector('video').srcObject = stream;
+            document.querySelector('video').setAttribute('playsinline', true);
             const [track] = stream.getVideoTracks();
             const capabilities = track.getCapabilities();
             const settings = track.getSettings();
-            track.setAttribute('playsinline', true);
             $("#msg").append(`<p>${JSON.stringify(settings)}</p>`)
 
             //https://googlechrome.github.io/samples/image-capture/update-camera-zoom.html
