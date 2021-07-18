@@ -24,19 +24,19 @@
                 },
                 facingMode: 'environment',
                 zoom:true,
-                torch:true,
             }
         }).then(function(stream) {
         /* use the stream */
-            $("#msg").append("<p>v2 backfacing camera with zoom found</p>")
+            $("#msg").append("<p>v3 backfacing camera with zoom found</p>")
             document.querySelector('video').srcObject = stream;
             const [track] = stream.getVideoTracks();
             const capabilities = track.getCapabilities();
             const settings = track.getSettings();
+            track.setAttribute('playsinline', true);
             $("#msg").append(`<p>${JSON.stringify(settings)}</p>`)
 
             //https://googlechrome.github.io/samples/image-capture/update-camera-zoom.html
-            track.applyConstraints({advanced: [ {zoom: 2}, {torch: true}, {focusMode:"continuous"}, {fillLightMode: "torch"} ]});
+            track.applyConstraints({advanced: [ {zoom: 2}, {torch: true}, {focusMode:"continuous"} ]});
         }).catch(function(err) {
             $("#msg").append(`<p>${err}</p>`)
         });
