@@ -31,13 +31,14 @@
             var video = document.querySelector('video');
             video.srcObject = stream;
             video.setAttribute('playsinline', true);
+            const [track] = stream.getVideoTracks();
+            const capabilities = track.getCapabilities();
+            const settings = track.getSettings();
+            
             video.onloadedmetadata = (function(e) {
                 // Do something with the video here.
                 this.applyConstraints({advanced: [ {zoom: 2}, {torch: true}, {focusMode:"continuous"}, {fillLightMode: "torch"} ]});
             }).bind(track);            
-            const [track] = stream.getVideoTracks();
-            const capabilities = track.getCapabilities();
-            const settings = track.getSettings();
             $("#msg").append(`<p>${JSON.stringify(settings)}</p>`)
 
             //https://googlechrome.github.io/samples/image-capture/update-camera-zoom.html
