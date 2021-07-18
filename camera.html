@@ -24,17 +24,20 @@
                 },
                 facingMode: 'environment',
                 zoom:true,
-                torch:true
+                torch:true,
             }
         }).then(function(stream) {
         /* use the stream */
-            $("#msg").append("<p>backfacing camera with zoom found</p>")
+            $("#msg").append("<p>v1 backfacing camera with zoom found</p>")
             document.querySelector('video').srcObject = stream;
             const [track] = stream.getVideoTracks();
             const capabilities = track.getCapabilities();
             const settings = track.getSettings();
+            $("#msg").append(`<p>${JSON.stringify(settings)}</p>`)
+
             settings.torch = true;
             settings.zoom = 2;
+            settings.focusMode = "continuous";
         }).catch(function(err) {
             $("#msg").append(`<p>${err}</p>`)
         });
