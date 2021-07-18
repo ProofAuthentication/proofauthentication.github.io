@@ -35,9 +35,8 @@
             const settings = track.getSettings();
             $("#msg").append(`<p>${JSON.stringify(settings)}</p>`)
 
-            settings.torch = true;
-            settings.zoom = 2;
-            settings.focusMode = "continuous";
+            //https://googlechrome.github.io/samples/image-capture/update-camera-zoom.html
+            track.applyConstraints({advanced: [ {zoom: 2}, {torch: true}, {focusMode:"continuous"} ]});
         }).catch(function(err) {
             $("#msg").append(`<p>${err}</p>`)
         });
