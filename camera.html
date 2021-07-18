@@ -27,9 +27,14 @@
             }
         }).then(function(stream) {
         /* use the stream */
-            $("#msg").append("<p>v6 backfacing camera with zoom found</p>")
-            document.querySelector('video').srcObject = stream;
-            document.querySelector('video').setAttribute('playsinline', true);
+            $("#msg").append("<p>v7 backfacing camera with zoom found</p>")
+            var video = document.querySelector('video');
+            video.srcObject = stream;
+            video.setAttribute('playsinline', true);
+            video.onloadedmetadata = (function(e) {
+                // Do something with the video here.
+                this.applyConstraints({advanced: [ {zoom: 2}, {torch: true}, {focusMode:"continuous"}, {fillLightMode: "torch"} ]});
+            }).bind(track);            
             const [track] = stream.getVideoTracks();
             const capabilities = track.getCapabilities();
             const settings = track.getSettings();
