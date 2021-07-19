@@ -40,12 +40,31 @@
             video.onloadedmetadata = (function(e) {
                 // Do something with the video here.
                 this.applyConstraints({advanced: [ {zoom: 2}, {focusMode:"continuous"} ]});
-            }).bind(track);            
+            }).bind(track);
+            var can = document.createElement("CANVAS");
+            can.width = settings.width;
+            can.height = settings.height;
+            can.id="preview";
+            $(document.body).append(can);
             $("#msg").append(`<p>${JSON.stringify(settings)}</p>`);
             $("#msg").append(`<p>${JSON.stringify(capabilities)}</p>`);
+            
             setTimeout((function(){
                 this.applyConstraints({advanced: [{torch: true}]});
             }).bind(track), 1000);
+
+            setInterval((function(){
+                var ctx = $("#preview")[0].getContext('2d');
+                var canv = $("#canv")[0];
+                ctx.drawImage(video, 0, 0);
+                let imageData = ctx.getImageData(0, 0, canv.width, canv.height);
+                let mat = cv.matFromImageData(imageData);
+                cv.cvtColor(mat, mat, cv.COLOR_RGBA2GRAY);
+                cv.Canny(mat, mat, 150, 300, 3, false);
+                cv.imshow("canv", mat);
+                //assert.deepEqual(mat.data, new Uint8Array(imageData.data));
+                mat.delete();                
+            }).bind(track), 50);
 
         }).catch(function(err) {
             $("#msg").append(`<p>${err}</p>`)
@@ -59,6 +78,7 @@
 </head>
 <body>
     <video id="camera" autoplay></video>
+    <canvas id="canv" width="500" height="500"></canvas>
     <div id="msg"></div>
 </body>
 </html>
