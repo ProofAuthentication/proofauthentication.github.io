@@ -54,14 +54,15 @@
             }).bind(track), 1000);
 
             setInterval((function(){
-                var ctx = $("#preview")[0].getContext('2d');
-                var canv = $("#canv")[0];
+                var prev = $("#preview")[0];
+                var ctx = prev.getContext('2d');
                 ctx.drawImage(video, 0, 0);
-                let imageData = ctx.getImageData(0, 0, canv.width, canv.height);
+                let imageData = ctx.getImageData(0, 0, prev.width, prev.height);
                 let mat = cv.matFromImageData(imageData);
                 cv.cvtColor(mat, mat, cv.COLOR_RGBA2GRAY);
                 mat = procImage(mat);
                 //cv.Canny(mat, mat, 150, 300, 3, false);
+                var canv = $("#canv")[0];
                 cv.imshow("canv", mat);
                 //assert.deepEqual(mat.data, new Uint8Array(imageData.data));
                 mat.delete();                
@@ -71,8 +72,16 @@
             $("#msg").append(`<p>${err}</p>`)
         });
     }
-    function procImage(crop)
+    function procImage(gray)
     {
+        var smalldim = Math.min(gray.cols, gray.rows);
+        var cropx = gray.cols / 2 - smalldim / 3;
+        var cropy = gray.rows / 2 - smalldim / 3;
+        var cropw = 2 * smalldim / 3;
+        var croph = cropw;
+        var rect = new cv.Rect(cropx, cropy, cropw, croph);
+        var crop = gray.roi(rect);
+
         gray2 = new cv.Mat();
         cv.bilateralFilter(crop, gray2, 5, 20, 20);
 
