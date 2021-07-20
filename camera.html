@@ -102,10 +102,8 @@
         cv.bitwise_and(destination2, destination2, andmat);
 
         cv.dilate(andmat, andmat, cv.getStructuringElement(cv.MORPH_ELLIPSE, new cv.Size(5, 5)));
-        var blurred = new cv.Mat();
-        cv.medianBlur(andmat, blurred, 9);
         var threshold1 = new cv.Mat();
-        cv.threshold(blurred, threshold1, 60, 255, cv.THRESH_BINARY);
+        cv.threshold(andmat, threshold1, 60, 255, cv.THRESH_BINARY);
         //Mat blurred2 = new cv.Mat();
         //cv.GaussianBlur(threshold1, blurred2, new Size(11, 11), 0);
         //Mat threshold2 = new cv.Mat();
